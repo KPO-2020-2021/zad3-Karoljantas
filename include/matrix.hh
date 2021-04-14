@@ -2,6 +2,7 @@
 
 #include "size.hh"
 #include "vector.hh"
+#include "rectangle.hh"
 #include <iostream>
 #include <cstdlib>
 
@@ -16,9 +17,11 @@ public:
     Matrix();                               // Konstruktor klasy
 
     Vector operator * (Vector tmp);           // Operator mnożenia przez wektor
+        rectangle operator * (rectangle tmp);           // Operator mnożenia przez wektor
 
     Matrix operator + (Matrix tmp);
-
+void count_matrix(double angle);
+void rotation(double angle,rectangle &tmp);
     double  &operator () (unsigned int row, unsigned int column);
     
     const double &operator () (unsigned int row, unsigned int column) const;
@@ -27,7 +30,31 @@ public:
 std::istream &operator>>(std::istream &in, Matrix &mat);
 
 std::ostream &operator<<(std::ostream &out, Matrix const &mat);
+void Matrix::rotation(double angle,rectangle &tmp)
+{
+count_matrix( angle);
+tmp=*this*tmp;
+}
+ void Matrix::count_matrix(double angle)
+ {
+        angle=angle*M_PI/180;
+        value[0][0]=cos(angle);
+         value[0][1]=-sin(angle);
+          value[1][0]=sin(angle);
+           value[1][1]=cos(angle);
 
+ }
+ rectangle Matrix::operator * (rectangle tmp)
+ {
+        rectangle wynik;
+
+        for(int i=0; i<SIZE_RECTANGLE; i++)
+        {
+            wynik[i]=*this*tmp[i];
+        }
+
+        return wynik;
+ }
 /******************************************************************************
  |  Konstruktor klasy Matrix.                                                 |
  |  Argumenty:                                                                |

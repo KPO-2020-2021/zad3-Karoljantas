@@ -5,13 +5,13 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "../tests/doctest/doctest.h"
 #endif
-
+#include <unistd.h>
 #include <iostream>
 #include <iomanip>
 #include <stdlib.h>
 #include <fstream>
 #include <string>
-
+#include "rectangle.hh"
 #include "exampleConfig.h"
 #include "example.h"
 #include "vector.hh"
@@ -106,6 +106,22 @@ bool PrzykladZapisuWspolrzednychDoPliku( const char  *sNazwaPliku,
   return !StrmPlikowy.fail();
 }
 
+bool Zapis( const char  *sNazwaPliku,rectangle rec)
+{
+  std::ofstream  StrmPlikowy;
+
+  StrmPlikowy.open(sNazwaPliku);
+  if (!StrmPlikowy.is_open())  {
+    std::cerr << ":(  Operacja otwarcia do zapisu \"" << sNazwaPliku << "\"" << std::endl
+	 << ":(  nie powiodla sie." << std::endl;
+    return false;
+  }
+
+  StrmPlikowy<<rec;
+
+  StrmPlikowy.close();
+  return !StrmPlikowy.fail();
+}
 int main() {
   std::cout << "Project Rotation 2D based on C++ Boiler Plate v"
             << PROJECT_VERSION_MAJOR /*duże zmiany, najczęściej brak kompatybilności wstecz */
@@ -153,21 +169,39 @@ int main() {
    //  jako wspolrzedne punktow podajemy tylko x,y.
    //
   Lacze.ZmienTrybRys(PzG::TR_2D);
-
-  PrzykladZapisuWspolrzednychDoStrumienia(std::cout,0);
-  if (!PrzykladZapisuWspolrzednychDoPliku("../datasets/prostokat.dat",0)) return 1;
+    double argumentsV2[] = {10.0, 25.0};
+  Vector tmpV3 = Vector(argumentsV2);
+       rectangle re(tmpV3,100,140);
+  
+ if (!Zapis("../datasets/prostokat.dat",re)) return 1;
   Lacze.Rysuj(); // <- Tutaj gnuplot rysuje, to co zapisaliśmy do pliku
+  std::cout<<re;
   std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
   std::cin.ignore(100000,'\n');
    //----------------------------------------------------------
    // Ponownie wypisuje wspolrzedne i rysuje prostokąt w innym miejscu.
    //
-  PrzykladZapisuWspolrzednychDoStrumienia(std::cout,50);
-  if (!PrzykladZapisuWspolrzednychDoPliku("../datasets/prostokat.dat",50)) return 1;
+
+ re.move_r(tmpV3);
+ if (!Zapis("../datasets/prostokat.dat",re)) return 1;
   Lacze.Rysuj(); // <- Tutaj gnuplot rysuje, to co zapisaliśmy do pliku
+  std::cout<<re;
   std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
   std::cin.ignore(100000,'\n');
-
+  std::cout<<re;
+for(int i=0; i<3600; i++)
+{
+  tmpM1.rotation(1,re);
+ if (!Zapis("../datasets/prostokat.dat",re)) return 1;
+  Lacze.Rysuj(); // <- Tutaj gnuplot rysuje, to co zapisaliśmy do pliku
+  
+  //std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
+  //std::cin.ignore(100000,'\n');
+  usleep(500);
+}
+std::cout<<re;
+ std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
+  std::cin.ignore(100000,'\n');
   // Z bazy projektu-wydmuszki Boiler Plate C++:
   // Bring in the dummy class from the example source,
   // just to show that it is accessible from main.cpp.
