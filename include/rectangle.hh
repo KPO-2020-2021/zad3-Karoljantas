@@ -41,6 +41,7 @@ rectangle rectangle::operator + (Vector move)
     for(int i=0;i<SIZE_RECTANGLE;i++)
         wynik[i]=point[i]+move;
     return wynik;
+    
 }
 std::ostream &operator <<(std::ostream &out,const rectangle &tmp )
 {

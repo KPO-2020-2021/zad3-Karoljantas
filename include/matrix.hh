@@ -18,7 +18,7 @@ public:
 
     Vector operator * (Vector tmp);           // Operator mnożenia przez wektor
         rectangle operator * (rectangle tmp);           // Operator mnożenia przez wektor
-
+float  Wyznacznik();
     Matrix operator + (Matrix tmp);
 void count_matrix(double angle);
 void rotation(double angle,rectangle &tmp);
@@ -118,12 +118,12 @@ Vector Matrix::operator * (Vector tmp) {
 double &Matrix::operator()(unsigned int row, unsigned int column) {
 
     if (row >= SIZE) {
-        std::cout << "Error: Macierz jest poza zasiegiem"; 
+      throw "Error: Macierz jest poza zasiegiem"; 
         exit(0); // lepiej byłoby rzucić wyjątkiem stdexcept
     }
 
     if (column >= SIZE) {
-        std::cout << "Error: Macierz jest poza zasiegiem";
+      throw "Error: Macierz jest poza zasiegiem";
         exit(0); // lepiej byłoby rzucić wyjątkiem stdexcept
     }
 
@@ -142,12 +142,12 @@ double &Matrix::operator()(unsigned int row, unsigned int column) {
 const double &Matrix::operator () (unsigned int row, unsigned int column) const {
 
     if (row >= SIZE) {
-        std::cout << "Error: Macierz jest poza zasiegiem";
+        throw "Error: Macierz jest poza zasiegiem";
         exit(0); // lepiej byłoby rzucić wyjątkiem stdexcept
     }
 
     if (column >= SIZE) {
-        std::cout << "Error: Macierz jest poza zasiegiem";
+       throw "Error: Macierz jest poza zasiegiem";
         exit(0); // lepiej byłoby rzucić wyjątkiem stdexcept
     }
 
@@ -203,4 +203,32 @@ std::ostream &operator<<(std::ostream &out, const Matrix &mat) {
     }
     return out;
 }
+
+//modyfikacja
+
+float Matrix::Wyznacznik()
+{
+
+float wyznacznik = 1;
+Matrix tablica=*this;
+for (int k = 0; k < SIZE - 1; k++)
+{
+
+for (int i = (1+k); i < SIZE; i++)
+{
+
+
+for (int j = (0+k); j < SIZE; j++)
+{
+tablica(i,j) = tablica(i,j)-((tablica(i,k) / tablica(k,k))*tablica(k,j));
+}
+}
+}
+
+
+for(int i =0 ; i<SIZE ;i++)
+wyznacznik=wyznacznik*tablica(i,i);
+return wyznacznik;
+
+} 
 

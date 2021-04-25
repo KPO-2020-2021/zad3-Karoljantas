@@ -26,8 +26,20 @@ public:
     const double &operator [] (int index) const;
 
     double &operator [] (int index);
+    
+    bool operator==(const Vector arg) const;
 
 };
+
+bool Vector::operator==(const Vector arg) const
+{
+    if(arg[0]== size[0] &&arg[1]== size[1] )
+    {
+        return true;
+   }
+    return false;
+    
+}
 
 std::ostream &operator << (std::ostream &out, Vector const &tmp);
 

@@ -172,39 +172,61 @@ int main() {
     double argumentsV2[] = {10.0, 25.0};
   Vector tmpV3 = Vector(argumentsV2);
        rectangle re(tmpV3,100,140);
-  
- if (!Zapis("../datasets/prostokat.dat",re)) return 1;
-  Lacze.Rysuj(); // <- Tutaj gnuplot rysuje, to co zapisaliśmy do pliku
-  std::cout<<re;
-  std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
-  std::cin.ignore(100000,'\n');
-   //----------------------------------------------------------
-   // Ponownie wypisuje wspolrzedne i rysuje prostokąt w innym miejscu.
-   //
+  char opcja;
+int ileobr;//ile razy ma sie powturzyc obrut
+double kat;
+double wektor[2];
+std::cout<<"obruc"<<std::endl;
+std::cout<<"przesun"<<std::endl;
+std::cout<<"wyswietl wiezcholki"<<std::endl;
+std::cout<<"move"<<std::endl;
+std::cout<<"koniec"<<std::endl;
 
- re.move_r(tmpV3);
- if (!Zapis("../datasets/prostokat.dat",re)) return 1;
-  Lacze.Rysuj(); // <- Tutaj gnuplot rysuje, to co zapisaliśmy do pliku
-  std::cout<<re;
-  std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
-  std::cin.ignore(100000,'\n');
-  std::cout<<re;
-for(int i=0; i<3600; i++)
+while (opcja != 'k')
 {
-  tmpM1.rotation(1,re);
- if (!Zapis("../datasets/prostokat.dat",re)) return 1;
+  std::cout<<"opcja"<<std::endl;
+    std::cin>>opcja;
+    switch(opcja)
+    {
+        case 'o':
+        {
+          std::cout<<"podaj kat"<<std::endl;
+            std::cin>>kat;
+            std::cin>>ileobr;
+            for(int i=0; i<ileobr; i++)
+            {
+                 tmpM1.rotation(kat,re);
+            }
+        }break;
+        case 'p':
+        {
+          double x,y;
+          std::cout<<"podaj x y"<<std::endl;
+            std::cin>>x>>y;
+             wektor[0]=x;
+             wektor[1]=y;
+              Vector tmpV3 = Vector(wektor);
+              re.move_r(tmpV3);
+            //kod tanslacji czyli przesuniecia
+        }break;
+        case 'w':
+        {
+            std::cout<<re;
+        }break;
+         case 'm':
+        {
+            std::cout<<"o"<<std::endl;
+std::cout<<"p"<<std::endl;
+std::cout<<"w"<<std::endl;
+std::cout<<"m"<<std::endl;
+std::cout<<"k"<<std::endl;        }break;
+    }
+    if (!Zapis("../datasets/prostokat.dat",re)) return 1;
   Lacze.Rysuj(); // <- Tutaj gnuplot rysuje, to co zapisaliśmy do pliku
-  
-  //std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
-  //std::cin.ignore(100000,'\n');
-  usleep(500);
+    
 }
-std::cout<<re;
- std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
-  std::cin.ignore(100000,'\n');
-  // Z bazy projektu-wydmuszki Boiler Plate C++:
-  // Bring in the dummy class from the example source,
-  // just to show that it is accessible from main.cpp.
+
   Dummy d = Dummy();
   return d.doSomething() ? 0 : -1;
 }
+
