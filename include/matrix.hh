@@ -5,7 +5,11 @@
 #include "rectangle.hh"
 #include <iostream>
 #include <cstdlib>
-
+/*!
+ * \brief Kalasa opisujaca macierz
+ *
+ *nieniejsza klasa zawiera metody oraz paremetry potrzebne do opisu macierzy
+ */
 class Matrix {
 
 private:
